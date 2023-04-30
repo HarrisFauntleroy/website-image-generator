@@ -14,13 +14,13 @@ Install the dependencies:
 
 ```bash
 cd website-screenshot-generator
-npm install
+yarn install
 ```
 
 Run the server:
 
 ```bash
-npm start
+yarn start
 ```
 
 ## Usage
