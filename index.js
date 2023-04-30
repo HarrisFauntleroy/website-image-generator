@@ -6,6 +6,13 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   req.query = parsedUrl.query;
 
+  if (!req.url) {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('OK');
+    return;
+  }
+
   console.log(`Request received: ${req.method} ${req.url}`);
 
   try {

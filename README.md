@@ -36,3 +36,5 @@ The server will respond with a PNG image of the requested website.
 ## License
 
 MIT
+
+![Website Screenshot](https://website-image-generator.vercel.app/?url=https://google.com)
