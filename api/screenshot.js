@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 async function getBrowserInstance() {
   console.debug('Launching browser instance');
   return puppeteer.launch({
-    headless: "new",
+    headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 }
@@ -26,13 +26,21 @@ module.exports = async (req, res) => {
   const url = req.query.url || 'https://example.com';
   console.log(`Generating screenshot for URL: ${url}`);
 
-  const screenshot = await generateWebsiteScreenshot(url);
+  try {
+    const screenshot = await generateWebsiteScreenshot(url);
 
-  res.setHeader('Content-Type', 'image/png');
-  // update at least once a day. 
-  res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.setHeader('Content-Type', 'image/png');
+    // Update at least once a day.
+    res.setHeader('Cache-Control', 'public, max-age=86400');
 
-  console.log(`Sending screenshot for URL: ${url}`);
-  res.send(screenshot)
-  console.log(`Screenshot for URL: ${url} finished`);
+    console.log(`Sending screenshot for URL: ${url}`);
+    res.send(screenshot);
+    console.log(`Screenshot for URL: ${url} finished`);
+  } catch (error) {
+    console.error('Error generating screenshot:', error);
+
+    res.statusCode = 500;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Internal Server Error');
+  }
 };

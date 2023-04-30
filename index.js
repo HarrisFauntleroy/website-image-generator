@@ -1,6 +1,6 @@
 const http = require('http');
 const url = require('url');
-const screenshot = require('./api/screenshot'); 
+const screenshot = require('./api/screenshot');
 
 const server = http.createServer(async (req, res) => {
   const parsedUrl = url.parse(req.url, true);
@@ -15,15 +15,7 @@ const server = http.createServer(async (req, res) => {
 
   console.log(`Request received: ${req.method} ${req.url}`);
 
-  try {
-    await screenshot(req, res);
-  } catch (error) {
-    console.error('Error generating screenshot:', error);
-
-    res.statusCode = 500;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end('Internal Server Error');
-  }
+  await screenshot(req, res);
 });
 
 const PORT = process.env.PORT || 4000;
