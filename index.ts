@@ -1,12 +1,13 @@
-import express from 'express';
-import ScreenshotService from './api/screenshot';
-import BrowserService from './api/browser';
+import express from "express";
+
+import BrowserService from "./api/browser";
+import ScreenshotService from "./api/screenshot";
 
 const app = express();
 const browserService = new BrowserService();
 const screenshotService = new ScreenshotService(browserService);
 
-app.get('/', (_req, res) => {
+app.get("/", (_req, res) => {
   res.send(`
     <html>
       <body>
@@ -19,10 +20,9 @@ app.get('/', (_req, res) => {
     `);
 });
 
-app.get('/screenshot', screenshotService.handleScreenshotRequest);
+app.get("/screenshot", screenshotService.handleScreenshotRequest);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-

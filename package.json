@@ -27,6 +27,67 @@
     "type-check": "tsc --noEmit",
     "watch": "yarn type-check --watch"
   },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es6": true,
+      "jest": true,
+      "node": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "settings": {
+      "import/resolver": {
+        "typescript": true,
+        "node": true
+      },
+      "react": {
+        "version": "detect"
+      }
+    },
+    "plugins": [
+      "@typescript-eslint",
+      "simple-import-sort",
+      "import",
+      "sonarjs",
+      "prettier"
+    ],
+    "extends": [
+      "plugin:@typescript-eslint/recommended",
+      "eslint:recommended",
+      "plugin:import/typescript",
+      "plugin:import/recommended",
+      "plugin:sonarjs/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "^_"
+        }
+      ],
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+      "import/first": "error",
+      "import/newline-after-import": "error",
+      "import/no-duplicates": "error"
+    },
+    "ignorePatterns": [
+      ".turbo",
+      "dist",
+      "node_modules"
+    ]
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testRegex": ".test.*",
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
+  },
   "dependencies": {
     "chrome-aws-lambda": "^10.1.0",
     "express": "^4.18.2",

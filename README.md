@@ -5,7 +5,7 @@ A simple Node.js server that generates website screenshots using Puppeteer.
 ## Installation
 
 1. Clone this repository:
-  
+
 ```bash
 git clone https://github.com/yourusername/website-screenshot-generator.git
 ```
