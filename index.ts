@@ -12,7 +12,7 @@ const screenshotService = new ScreenshotService(browserService);
 
 const isProduction = process.env.NODE_ENV === "production";
 const HOSTNAME = isProduction
-  ? "https://monkfish-app-ih5xa.ondigitalocean.app/screenshot?url=https://google.com%"
+  ? "https://monkfish-app-ih5xa.ondigitalocean.app"
   : "http://localhost";
 const PORT = process.env.PORT || 4000;
 
