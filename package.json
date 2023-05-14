@@ -128,5 +128,10 @@
     "tsup": "^6.7.0",
     "tsx": "^3.7.1",
     "typescript": "5.0.4"
-  }
+  },
+  "supportedArchitectures": [
+    "linux",
+    "darwin",
+    "arm64"
+  ]
 }

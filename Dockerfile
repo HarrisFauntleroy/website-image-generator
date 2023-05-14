@@ -1,18 +1,20 @@
-# Start from the official Node.js Docker image
-FROM node:16
+FROM node:16.17.0-bullseye-slim
 
-RUN apt-get update && apt-get install -y libnss3
+ENV NODE_ENV production
+
+RUN apt-get update && apt-get install -y libnss3 chromium
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY --chown=node:node . /usr/src/app
 
-RUN npm install
+RUN yarn install
 
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+USER node
+CMD [ "node", "dist/index.js" ]
