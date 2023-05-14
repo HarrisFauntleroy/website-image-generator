@@ -17,10 +17,10 @@ cd website-screenshot-generator
 yarn install
 ```
 
-Run the server:
+Run the server in development mode:
 
 ```bash
-yarn start
+yarn dev
 ```
 
 ## Usage

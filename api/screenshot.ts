@@ -1,17 +1,12 @@
-import { Browser, Page, launch } from 'puppeteer';
+import { Browser, Page } from 'puppeteer';
+import BrowserService from './browser';
+import { Request, Response } from 'express';
 
 class ScreenshotService {
-  async getBrowserInstance(): Promise<Browser> {
-    console.debug('Launching browser instance');
-    return launch({
-      headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    });
-  }
+  browserService: BrowserService;
 
-  async closeBrowserInstance(browser: Browser): Promise<void> {
-    console.debug('Closing browser instance');
-    await browser.close();
+  constructor(browserService: BrowserService) {
+    this.browserService = browserService;
   }
 
   async openPage(browser: Browser, url: string): Promise<Page> {
@@ -25,7 +20,7 @@ class ScreenshotService {
   }
 
   async generateWebsiteScreenshot(url: string): Promise<Buffer> {
-    const browser = await this.getBrowserInstance();
+    const browser = await this.browserService.getBrowserInstance();
     let screenshot;
     try {
       const page = await this.openPage(browser, url);
@@ -34,9 +29,27 @@ class ScreenshotService {
       console.error('Error generating screenshot:', error);
       throw error;
     } finally {
-      await browser.close();
+      await this.browserService.closeBrowserInstance(browser);
     }
     return screenshot;
+  }
+
+  handleScreenshotRequest = async (req: Request, res: Response) => {
+    if (!req.query || typeof req.query.url !== 'string') {
+      return res.status(400).send('Invalid URL provided');
+    }
+    const url = req.query.url;
+
+    this.generateWebsiteScreenshot(url)
+      .then((screenshot) => {
+        res.setHeader('Content-Type', 'image/png');
+        res.setHeader('Cache-Control', 'public, max-age=86400');
+        res.end(screenshot);
+      })
+      .catch((error) => {
+        console.error('Error generating screenshot:', error);
+        return res.status(500).send(`Internal Server Error: ${error.message}`);
+      });
   }
 }
 

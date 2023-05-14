@@ -1,9 +1,10 @@
 import express from 'express';
-import validUrl from 'valid-url';
 import ScreenshotService from './api/screenshot';
+import BrowserService from './api/browser';
 
 const app = express();
-const screenshotService = new ScreenshotService();
+const browserService = new BrowserService();
+const screenshotService = new ScreenshotService(browserService);
 
 app.get('/', (_req, res) => {
   res.send(`
@@ -18,27 +19,7 @@ app.get('/', (_req, res) => {
     `);
 });
 
-app.get('/screenshot', async (req, res) => {
-  const url = req.query.url as string;
-
-  if (!isValidUrl(url)) {
-    return res.status(400).send('Invalid URL provided');
-  }
-
-  try {
-    const screenshot = await screenshotService.generateWebsiteScreenshot(url);
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Cache-Control', 'public, max-age=86400');
-    res.end(screenshot);
-  } catch (error) {
-    console.error('Error generating screenshot:', error);
-    return res.status(500).send('Internal Server Error');
-  }
-});
-
-function isValidUrl(url: string) {
-  return !!validUrl.isUri(url);
-}
+app.get('/screenshot', screenshotService.handleScreenshotRequest);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
