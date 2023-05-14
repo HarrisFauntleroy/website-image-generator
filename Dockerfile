@@ -1,16 +1,16 @@
 FROM node:16.17.0-bullseye-slim
 
-ENV NODE_ENV production
-
 RUN apt-get update && apt-get install -y libnss3 chromium
 
 WORKDIR /usr/src/app
 
-COPY --chown=node:node . /usr/src/app
+COPY package.json yarn.lock ./
 
-RUN yarn install
+RUN yarn --frozen-lockfile
 
 COPY . .
+
+ENV NODE_ENV production
 
 RUN yarn build
 

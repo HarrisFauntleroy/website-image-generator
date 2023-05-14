@@ -1,0 +1,4 @@
+.vercel
+.github
+node_modules
+dist
