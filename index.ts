@@ -12,7 +12,7 @@ const screenshotService = new ScreenshotService(browserService);
 
 const isProduction = process.env.NODE_ENV === "production";
 const HOSTNAME = isProduction
-  ? "https://seashell-app-pqemf.ondigitalocean.app"
+  ? "https://monkfish-app-ih5xa.ondigitalocean.app/screenshot?url=https://google.com%"
   : "http://localhost";
 const PORT = process.env.PORT || 4000;
 
@@ -22,8 +22,8 @@ app.get("/", (_req, res) => {
       <body>
         <h1>Welcome to our screenshot service!</h1>
         <p>Usage: screenshot?url=<URL></p>
-        <p>Example: "${HOSTNAME}:${PORT}/screenshot?url=https://google.com" </p>
-        <img src="${HOSTNAME}:${PORT}/screenshot?url=https://google.com" />
+        <p>Example: "${HOSTNAME}/screenshot?url=https://google.com" </p>
+        <img src="${HOSTNAME}/screenshot?url=https://google.com" />
       </body>
     </html>
     `);
