@@ -16,11 +16,11 @@ class ScreenshotService {
     return page;
   }
 
-  async takeScreenshot(page: Page): Promise<Buffer> {
+  async takeScreenshot(page: Page): Promise<string | Buffer> {
     return await page.screenshot({ type: "png" });
   }
 
-  async generateWebsiteScreenshot(url: string): Promise<Buffer> {
+  async generateWebsiteScreenshot(url: string): Promise<string | Buffer> {
     const browser = await this.browserService.getBrowserInstance();
     let screenshot;
     try {
