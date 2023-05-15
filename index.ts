@@ -13,7 +13,8 @@ const screenshotService = new ScreenshotService(browserService);
 const isProduction = process.env.NODE_ENV === "production";
 const HOSTNAME = isProduction
   ? "https://monkfish-app-ih5xa.ondigitalocean.app"
-  : "http://localhost";
+  : "http://localhost:4000";
+
 const PORT = process.env.PORT || 4000;
 
 app.get("/", (_req, res) => {
@@ -34,7 +35,5 @@ app.get("/screenshot", screenshotService.handleScreenshotRequest);
 app.listen(PORT, () => {
   console.log(`Environment: ${process.env.NODE_ENV}`);
   console.log(`Server listening on port ${PORT}`);
-  console.log(
-    `Try it out: ${HOSTNAME}:${PORT}/screenshot?url=https://google.com`
-  );
+  console.log(`Try it out: ${HOSTNAME}/screenshot?url=https://google.com`);
 });
