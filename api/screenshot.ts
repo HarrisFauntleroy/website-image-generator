@@ -14,7 +14,7 @@ class ScreenshotService {
   async openPage(browser: Browser, url: string): Promise<Page> {
     console.log(`Opening page with URL: ${url}`);
     const page = await browser.newPage();
-    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setViewport({ width: 800, height: 600 });
     await page.goto(url, { waitUntil: "networkidle2" });
     console.log(`Page with URL: ${url} opened successfully`);
     return page;
