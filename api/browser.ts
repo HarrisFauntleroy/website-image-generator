@@ -4,7 +4,8 @@ class BrowserService {
   async getBrowserInstance(): Promise<Browser> {
     console.debug("Launching browser instance");
     return await launch({
-      args: ["--disable-setuid-sandbox"],
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     })
       .then((browser) => {
         console.debug("Browser instance launched");
