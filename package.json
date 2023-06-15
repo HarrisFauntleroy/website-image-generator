@@ -99,7 +99,7 @@
     "puppeteer": "18",
     "puppeteer-core": "10.4.0",
     "valid-url": "^1.0.9",
-    "vercel": "^29.0.2"
+    "vercel": "^29.4.0"
   },
   "devDependencies": {
     "@jest/types": "29.5.0",
